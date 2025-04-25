@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Carga - Contenedor 40' HQ</title>
+  <style>
+    body {
+      background-color: #003366; /* Azul rey */
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      background-color: white;
+      color: black;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    h1 {
+      text-align: center;
+      color: white;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      background-color: #fff;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+    .legend {
+      font-size: 12px;
+      color: #777;
+      margin-left: 5px;
+    }
+    .button {
+      margin-top: 20px;
+      padding: 10px 15px;
+      background-color: #ccc;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .results {
+      margin-top: 20px;
+      font-weight: bold;
+      background-color: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .images {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .images img {
+      width: 100%;
+      max-width: 300px;
+      margin: 10px auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Calculadora de Carga - Contenedor 40' HQ</h1>
+
+  <div class="container">
+    <label for="alto">Alto de la caja (cm) <span class="legend">(solo números)</span></label>
+    <input type="number" id="alto" placeholder="Ej. 50">
+
+    <label for="ancho">Ancho de la caja (cm) <span class="legend">(solo números)</span></label>
+    <input type="number" id="ancho" placeholder="Ej. 40">
+
+    <label for="profundidad">Profundidad de la caja (cm) <span class="legend">(solo números)</span></label>
+    <input type="number" id="profundidad" placeholder="Ej. 60">
+
+    <label for="peso">Peso de la caja (kg) <span class="legend">(solo números)</span></label>
+    <input type="number" id="peso" placeholder="Ej. 10">
+
+    <button class="button" onclick="calcular()">Calcular</button>
+
+    <div id="resultado" class="results"></div>
+
+    <div class="images">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Box_diagram.svg" alt="Dimensiones de la caja">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Container_ship_cutaway.png" alt="Contenedor 40 HQ con cajas">
+    </div>
+  </div>
+
+  <script>
+    function calcular() {
+      const alto = parseFloat(document.getElementById('alto').value);
+      const ancho = parseFloat(document.getElementById('ancho').value);
+      const profundidad = parseFloat(document.getElementById('profundidad').value);
+      const peso = parseFloat(document.getElementById('peso').value);
+
+      if (isNaN(alto) || isNaN(ancho) || isNaN(profundidad) || isNaN(peso)) {
+        document.getElementById('resultado').innerHTML = \"Por favor, ingresa todos los datos correctamente.\";
+        return;
+      }
+
+      const volumenCaja = (alto / 100) * (ancho / 100) * (profundidad / 100); // en m³
+      const volumenContenedor = 76.3; // m³ estándar 40' HQ
+      const cantidadCajas = Math.floor(volumenContenedor / volumenCaja);
+      const pesoTotal = cantidadCajas * peso;
+
+      document.getElementById('resultado').innerHTML = `
+        <p>Volumen por caja: <strong>${volumenCaja.toFixed(3)} m³</strong></p>
+        <p>Cantidad estimada que caben: <strong>${cantidadCajas} cajas</strong></p>
+        <p>Peso total aproximado: <strong>${pesoTotal.toFixed(2)} kg</strong></p>
+      `;
+    }
+  </script>
+
+</body>
+</html>
